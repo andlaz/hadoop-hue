@@ -36,7 +36,6 @@ class Configure < Thor
       :yarn_resource_manager_host,
       :yarn_resource_manager_port,
       :yarn_resource_manager_url,
-      :yarn_proxy_server_url,
       :yarn_history_server_url
 
   end
@@ -47,7 +46,6 @@ class Configure < Thor
   option :yarn_resource_manager_host, :required => true, :desc => "YARN Resource Manager host"
   option :yarn_resource_manager_port, :default => 8032, :required => true, :desc => "YARN Resource Manager data port"
   option :yarn_resource_manager_url, :required => true, :desc => "YARN Resource Manager API URL"
-  option :yarn_proxy_server_url, :required => true, :desc => "YARN Application Proxy URL"
   option :yarn_history_server_url, :required => true, :desc => "YARN History Server URL"
   option :oozie_url, :desc => "Oozie URL, if available"
   def hue
@@ -60,7 +58,6 @@ class Configure < Thor
     configuration.yarn_resource_manager_host = options[:yarn_resource_manager_host]
     configuration.yarn_resource_manager_port = options[:yarn_resource_manager_port]
     configuration.yarn_resource_manager_url = options[:yarn_resource_manager_url]
-    configuration.yarn_proxy_server_url = options[:yarn_proxy_server_url]
     configuration.yarn_history_server_url = options[:yarn_history_server_url]
     configuration.oozie_url = options[:oozie_url]
     
