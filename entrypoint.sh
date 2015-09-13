@@ -18,7 +18,8 @@ add_hue_options () {
 	if [ $NAMENODE_NAME ] && [ ! "$*" == *"--hdfs-default-fs"* ]; then opts="$opts --hdfs-default-fs hdfs://namenode:8020"; fi
 	if [ $RESOURCEMANAGER_NAME ] && [ ! "$*" == *"--yarn-resource-manager-host"* ]; then opts="$opts --yarn-resource-manager-host resourcemanager --yarn-resource-manager-url http://resourcemanager:8088"; fi
 	if [ $OOZIE_NAME ] && [ ! "$*" == *"--oozie-url"* ]; then opts="$opts --oozie-url http://oozie:11000/oozie"; fi
-		
+	if [ $HISTORYSERVER_NAME ] && [ ! "$*" == *"--history-server-url"* ]; then opts="$opts --history-server-url http://historyserver:19888"; fi
+	
 	echo $opts
 }
 
