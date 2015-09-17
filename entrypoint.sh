@@ -16,15 +16,18 @@ add_hue_options () {
 	local opts=""
 	
 	if [ $NAMENODE_NAME ] && [ ! "$*" == *"--hdfs-default-fs"* ]; then opts="$opts --hdfs-default-fs hdfs://namenode:8020"; fi
-	if [ $RESOURCEMANAGER_NAME ] && [ ! "$*" == *"--yarn-resource-manager-host"* ]; then opts="$opts --yarn-resource-manager-host resourcemanager --yarn-resource-manager-url http://resourcemanager:8088"; fi
+	if [ $NAMENODE_NAME ] && [ ! "$*" == *"--hdfs-webhdfs-url"* ]; then opts="$opts --hdfs-webhdfs-url http://namenode:50070/webhdfs/v1"; fi
+	if [ $RESOURCEMANAGER_NAME ] && [ ! "$*" == *"--yarn-resource-manager-host"* ]; then opts="$opts --yarn-resource-manager-host resourcemanager"; fi
+	if [ $RESOURCEMANAGER_NAME ] && [ ! "$*" == *"--yarn-resource-manager-url"* ]; then opts="$opts --yarn-resource-manager-url http://resourcemanager:8088"; fi
+	if [ $RESOURCEMANAGER_NAME ] && [ ! "$*" == *"--yarn-proxy-api-url"* ]; then opts="$opts --yarn-proxy-api-url http://resourcemanager:8088"; fi
 	if [ $OOZIE_NAME ] && [ ! "$*" == *"--oozie-url"* ]; then opts="$opts --oozie-url http://oozie:11000/oozie"; fi
-	if [ $HISTORYSERVER_NAME ] && [ ! "$*" == *"--history-server-url"* ]; then opts="$opts --history-server-url http://historyserver:19888"; fi
+	if [ $HISTORYSERVER_NAME ] && [ ! "$*" == *"--yarn-history-server-url"* ]; then opts="$opts --yarn-history-server-url http://historyserver:19888"; fi	
 	
 	echo $opts
 }
 
 case $1 in
-	hue) ruby /root/configure.rb $* `add_hue_options $*` && supervisord -c /etc/supervisord.conf ;;
+	hue) ruby /root/configure.rb $* `add_hue_options $*` && su hadoop -c /usr/local/hue/build/env/bin/supervisor;;
 	help) cat << EOM
 The image's entry point script will populate the following -parameters from Docker environment variables:
 EOM

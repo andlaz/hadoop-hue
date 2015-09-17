@@ -1,9 +1,13 @@
 [desktop]
-
   send_dbug_messages=1
   secret_key=<%=@secret_key%>
   http_host=0.0.0.0
-  http_port=8000
+  http_port=8888
   time_zone=<%=@time_zone%>
   default_hdfs_superuser=hadoop
+  default_user=hadoop
+  server_user=hadoop
+  server_group=hadoop
   collect_usage=false
+  app_blacklist=beeswax,impala,security,rdbms,hbase,zookeeper,metastore,spark,search,indexer,sqoop
+  

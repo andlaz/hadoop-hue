@@ -32,10 +32,12 @@ class Configure < Thor
     attr_accessor :secret_key,
       :time_zone,
       :hdfs_default_fs,
+      :hdfs_webhdfs_url,
       :oozie_url,
       :yarn_resource_manager_host,
       :yarn_resource_manager_port,
       :yarn_resource_manager_url,
+      :yarn_proxy_api_url,
       :yarn_history_server_url
 
   end
@@ -43,10 +45,12 @@ class Configure < Thor
   desc "hue", "Configure HUE"
   option :time_zone, :default => "Europe/Budapest", :desc => "Time zone of the Hue install"
   option :hdfs_default_fs, :required => true, :desc => "HDFS url to use"
+  option :hdfs_webhdfs_url, :required => true, :desc => "WebHDFS API url to use"
   option :yarn_resource_manager_host, :required => true, :desc => "YARN Resource Manager host"
   option :yarn_resource_manager_port, :default => 8032, :required => true, :desc => "YARN Resource Manager data port"
   option :yarn_resource_manager_url, :required => true, :desc => "YARN Resource Manager API URL"
   option :yarn_history_server_url, :required => true, :desc => "YARN History Server URL"
+  option :yarn_proxy_api_url, :required => true, :desc => "YARN App Proxy API URL"
   option :oozie_url, :desc => "Oozie URL, if available"
   def hue
     
@@ -55,24 +59,23 @@ class Configure < Thor
     configuration.secret_key = SecureRandom.urlsafe_base64
     configuration.time_zone = options[:time_zone]
     configuration.hdfs_default_fs = options[:hdfs_default_fs]
+    configuration.hdfs_webhdfs_url = options[:hdfs_webhdfs_url]
     configuration.yarn_resource_manager_host = options[:yarn_resource_manager_host]
     configuration.yarn_resource_manager_port = options[:yarn_resource_manager_port]
     configuration.yarn_resource_manager_url = options[:yarn_resource_manager_url]
+    configuration.yarn_proxy_api_url = options[:yarn_proxy_api_url]
     configuration.yarn_history_server_url = options[:yarn_history_server_url]
     configuration.oozie_url = options[:oozie_url]
     
     File.write '/etc/hue/desktop.ini',
       configuration.render_from('/etc/hue/desktop.ini.erb')
       
-    File.write '/etc/hue/hdfs.ini',
-      configuration.render_from('/etc/hue/hdfs.ini.erb')
+    File.write '/etc/hue/hadoop.ini',
+      configuration.render_from('/etc/hue/hadoop.ini.erb')
       
     File.write '/etc/hue/oozie.ini',
       configuration.render_from('/etc/hue/oozie.ini.erb')
-      
-    File.write '/etc/hue/yarn.ini',
-      configuration.render_from('/etc/hue/yarn.ini.erb')
-      
+     
   end
 
 

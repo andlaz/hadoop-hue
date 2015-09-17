@@ -1,0 +1,13 @@
+[hadoop]
+  [[hdfs_clusters]]
+    [[[default]]]
+      fs_defaultfs=<%=@hdfs_default_fs%>
+      webhdfs_url=<%=@hdfs_webhdfs_url%>
+  [[yarn_clusters]]
+    [[[default]]]
+      resourcemanager_host=<%=@yarn_resource_manager_host%>
+      resourcemanager_port=<%=@yarn_resource_manager_port%>
+      submit_to=True
+      resourcemanager_api_url=<%=@yarn_resource_manager_url%>
+      proxy_api_url=<%=@yarn_proxy_api_url%>
+      history_server_api_url=<%=@yarn_history_server_api_url%>
